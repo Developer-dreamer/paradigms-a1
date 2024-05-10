@@ -1,6 +1,9 @@
 #ignore .vs folder
 /.vs
-# Prerequisites
+**/Debug/
+**/x64/
+
+#Prerequisites
 *.d
 
 # Compiled Object files
