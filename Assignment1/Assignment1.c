@@ -16,11 +16,18 @@ int main() {
                     "6 - insert text by index in file\n"
                     "7 - search substring position in file\n";
     printf("%s", helper);
-    int breaker = 1;
+    
+    char* fileName = "TestFile.txt";
 
+    char** textFromFile;
+    char* userInput;
+
+    int breaker = 1;
     while (breaker) {
         printf("Enter a command: ");
-        int command = readCommand();
+        int command;
+        scanf_s("%d", &command);
+
         switch (command) {
             // append symbols to the end of string
         case 0:
@@ -40,7 +47,11 @@ int main() {
             break;
             // load string from the file
         case 4:
-			printf("x is 4\n");
+            textFromFile = loadFromFile(fileName);
+
+            for(int i = 0; textFromFile[i] != NULL; i++) {
+				printf("%s\n", textFromFile[i]);
+			}
 			break;
         default:
             printf("Such command does not exist\n");
