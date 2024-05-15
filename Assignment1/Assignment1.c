@@ -3,8 +3,8 @@
 #include "Methods.h"
 
 typedef struct Coordinates {
-	int line;
-	int index;
+    int line;
+    int index;
 } Coordinates;
 
 int main() {
@@ -19,7 +19,7 @@ int main() {
     
     char* fileName = "TestFile.txt";
 
-    char** textFromFile;
+    char** text;
     char* userInput;
 
     int breaker = 1;
@@ -29,30 +29,43 @@ int main() {
         scanf_s("%d", &command);
 
         switch (command) {
-            // append symbols to the end of string
+
+            // close the program
         case 0:
             breaker = 0;
             printf("Program has been closed successfully\n");
             break;
+
+            // append symbols to the end of string
         case 1:
             printf("x is 1\n");
             break;
+
             // start new line in the string
         case 2:
             printf("x is 2\n");
             break;
+
             // save current string to the file 
         case 3:
-            printf("x is 3\n");
-            break;
+
+            text = calloc(10, sizeof(char*));
+            text[0] = "Some useless text";
+
+            saveToFile(fileName, text);
+            printf("Text has been saved to the file\n");
+
             // load string from the file
         case 4:
-            textFromFile = loadFromFile(fileName);
+            text = loadFromFile(fileName);
 
-            for(int i = 0; textFromFile[i] != NULL; i++) {
-				printf("%s\n", textFromFile[i]);
-			}
-			break;
+            // ----- was used for debugging -----
+            //for(int i = 0; text[i] != NULL; i++) {
+            //    printf("%s\n", text[i]);
+            //}
+            //-----------------------------------
+
+            break;
         default:
             printf("Such command does not exist\n");
             break;

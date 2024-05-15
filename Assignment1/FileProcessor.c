@@ -4,17 +4,17 @@
 #include <string.h>
 #include "Methods.h"
 
-int saveToFile(char* filename, char** textToInsert) {
-    FILE* file = fopen("output.txt", "w");
+int saveToFile(char* filename, char** text) {
+    FILE* file = fopen(filename, "w");
     if (file == NULL) {
         printf("Failed to open file\n");
         return -1;
     }
-
-    for (int i = 0; textToInsert[i] != NULL; i++) {
-		fprintf(file, "%s\n", textToInsert[i]);
+    
+    for(int i = 0; text[i] != NULL && text[i] != "\0"; i++) {
+		fprintf(file, "%s\n", text[i]);
 	}
-
+    fclose(file);
     return 0;
 }
 
@@ -46,7 +46,7 @@ char** loadFromFile(char* filename) {
             max_lines *= 2;
             lines = realloc(lines, max_lines * sizeof(char*));
             for (int j = i; j < max_lines; j++) {
-                lines[j] = malloc(MAX_LINE_LENGTH * sizeof(char));
+                lines[j] = calloc(MAX_LINE_LENGTH, sizeof(char));
             }
         }
     }
