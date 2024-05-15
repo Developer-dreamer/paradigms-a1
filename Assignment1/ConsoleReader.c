@@ -1,3 +1,4 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <stdlib.h>
 #include "Methods.h"
@@ -33,4 +34,17 @@ int readCommand() {
 	char* command = malloc(2);
     fgets(command, 2, stdin);
     return atoi(command);
+}
+
+Coordinates readCoordinates() {
+	Coordinates coords;
+    if (scanf("%d %d", &coords.line, &coords.index) == 2) {
+        return coords;
+    }
+    else
+    {
+        printf("Invalid input\n");
+        return;
+    }
+
 }

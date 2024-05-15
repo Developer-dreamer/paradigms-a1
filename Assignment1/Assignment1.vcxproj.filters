@@ -18,8 +18,22 @@
     <ClCompile Include="Assignment1.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Parser.c">
+    <ClCompile Include="FileProcessor.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ConsoleReader.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UserInputHandler.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Methods.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="TestFile.txt" />
   </ItemGroup>
 </Project>

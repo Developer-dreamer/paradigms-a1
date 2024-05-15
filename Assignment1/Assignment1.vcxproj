@@ -130,6 +130,7 @@
     <ClCompile Include="Assignment1.c" />
     <ClCompile Include="FileProcessor.c" />
     <ClCompile Include="ConsoleReader.c" />
+    <ClCompile Include="UserInputHandler.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Methods.h" />
