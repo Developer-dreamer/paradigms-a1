@@ -14,10 +14,10 @@ int main() {
 
 	char* fileName = "TestFile.txt";
 
-	char** text = NULL;
-	char* userInput;
+	char** text_from_file = NULL;
+	char** local_text = NULL;
+	char* userInput = NULL;
 	Coordinates coords;
-
 	int breaker = 1;
 	while (breaker) {
 		printf("Enter a command: ");
@@ -45,15 +45,15 @@ int main() {
 			// save current string to the file 
 		case 3:
 
-			text = calloc(10, sizeof(char*));
-			text[0] = "Some useless text";
+			local_text = calloc(10, sizeof(char*));
+			local_text[0] = "Some useless text";
 
-			saveToFile(fileName, text);
+			saveToFile(fileName, local_text);
 			printf("Text has been saved to the file\n");
 
 			// load string from the file
 		case 4:
-			text = loadFromFile(fileName);
+			text_from_file = loadFromFile(fileName);
 			printf("Text has been loaded from the file\n");
 
 			// ----- was used for debugging -----
@@ -64,8 +64,8 @@ int main() {
 			break;
 			// print current string to console
 		case 5:
-			for (int i = 0; text[i] != NULL && text[i] != "\0"; i++) {
-				printf("%s\n", text[i]);
+			for (int i = 0; local_text[i] != NULL && local_text[i] != "\0"; i++) {
+				printf("%s\n", local_text[i]);
 			}
 			break;
 			// insert text by index in file
@@ -73,7 +73,9 @@ int main() {
 			printf("Enter coordinates (fromat: (x,y) - (row, line)):  ");
 			coords = readCoordinates();
 
-
+			// ----- was used for debugging -----
+			// printf("%d %d\n", coords.line, coords.index);
+			// ----------------------------------
 			break;
 
 			// search substring position in file
