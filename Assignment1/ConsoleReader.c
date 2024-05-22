@@ -11,9 +11,7 @@ int readConsole() {
 	int length = 0;
 
 	printf("Enter a string: ");
-	// Clear the input stream
-	int c;
-	while ((c = getchar()) != '\n' && c != EOF);
+
 
 	int row_to_insert = 0;
 	while (1) {
