@@ -18,8 +18,6 @@ int saveToFile(char* filename, char** text) {
     return 0;
 }
 
-#define MAX_LINE_LENGTH 256
-#define INITIAL_LINES 10
 
 char** loadFromFile(char* filename) {
 
@@ -29,24 +27,29 @@ char** loadFromFile(char* filename) {
         return NULL;
     }
 
-    int max_lines = INITIAL_LINES;
-    char** lines = malloc(max_lines * sizeof(char*));
+    int max_lines = text_from_file_rows;
+    if (text_from_file != NULL) {
+        printf("File already loaded\n");
+        return -1;
+    }
+
+    text_from_file = malloc(max_lines * sizeof(char*));
     for (int i = 0; i < max_lines; i++) {
-        lines[i] = calloc(MAX_LINE_LENGTH, sizeof(char));
+        text_from_file[i] = calloc(text_from_file_chars, sizeof(char));
     }
 
     int i = 0;
-    while (fgets(lines[i], MAX_LINE_LENGTH, file) != NULL) {
+    while (fgets(text_from_file[i], text_from_file_chars, file) != NULL) {
         // Remove the newline character
-        lines[i][strcspn(lines[i], "\n")] = '\0';
+        text_from_file[i][strcspn(text_from_file[i], "\n")] = '\0';
         i++;
 
         // If we've reached the end of the array, resize it
         if (i >= max_lines) {
             max_lines *= 2;
-            lines = realloc(lines, max_lines * sizeof(char*));
+            text_from_file = realloc(text_from_file, max_lines * sizeof(char*));
             for (int j = i; j < max_lines; j++) {
-                lines[j] = calloc(MAX_LINE_LENGTH, sizeof(char));
+                text_from_file[j] = calloc(local_text_chars, sizeof(char));
             }
         }
     }
@@ -54,5 +57,5 @@ char** loadFromFile(char* filename) {
     // Close the file
     fclose(file);
 
-    return lines;
+    return 0;
 }

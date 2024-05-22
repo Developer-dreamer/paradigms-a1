@@ -6,11 +6,11 @@ extern char* helper;
 
 extern char* fileName;
 
-extern int local_text_rows, local_text_lines;
-extern int text_from_file_rows, text_from_file_lines;
+extern int local_text_rows, local_text_chars, user_input_len;
+extern int text_from_file_rows, text_from_file_chars;
 extern char** text_from_file;
 extern char** local_text;
-extern char* userInput;
+extern char* user_input;
 
 // ------------------------------------------
 #ifndef COORDINATES_H
@@ -26,7 +26,7 @@ extern Coordinates coords;
 #ifndef READER_H
 #define READER_H
 
-char* readConsole();
+int readConsole();
 int readCommand();
 Coordinates readCoordinates();
 
@@ -43,6 +43,6 @@ char** loadFromFile(FILE* );
 #ifndef USERINPUTHANDLER_H
 #define USERINPUTHANDLER_H
 
-int buildText(char**, char*, Coordinates);
+int end_insert_input();
 
 #endif

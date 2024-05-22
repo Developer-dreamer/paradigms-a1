@@ -2,6 +2,22 @@
 #include <stdlib.h>
 #include "Methods.h"
 
+
+
+char* fileName = "TestFile.txt";
+
+int local_text_rows = 64;
+int local_text_chars = 64;
+int text_from_file_rows = 64;
+int text_from_file_chars = 64;
+int user_input_len = 64;
+
+char** text_from_file = NULL;
+char** local_text = NULL;
+char* user_input = NULL;
+
+Coordinates coords;
+int check = 0;
 int main() {
 	char* helper = "0 - close the program\n"
 		"1 - append symbols to the end\n"
@@ -12,12 +28,6 @@ int main() {
 		"7 - search substring position in file\n";
 	printf("%s", helper);
 
-	char* fileName = "TestFile.txt";
-
-	char** text_from_file = NULL;
-	char** local_text = NULL;
-	char* userInput = NULL;
-	Coordinates coords;
 	int breaker = 1;
 	while (breaker) {
 		printf("Enter a command: ");
@@ -34,7 +44,16 @@ int main() {
 
 			// append symbols to the end of string
 		case 1:
-			printf("x is 1\n");
+			readConsole();
+			end_insert_input();
+
+			// ------- was used for debugging -------
+			/*for( int i = 0; local_text[i] != NULL && local_text[i] != '\0'; i++)
+			{
+				printf("%s\n", local_text[i]);
+			}*/
+			// ---------------------------------------
+
 			break;
 
 			// start new line in the string
@@ -50,7 +69,7 @@ int main() {
 
 			saveToFile(fileName, local_text);
 			printf("Text has been saved to the file\n");
-
+			break;
 			// load string from the file
 		case 4:
 			text_from_file = loadFromFile(fileName);
