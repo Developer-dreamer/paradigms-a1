@@ -4,7 +4,7 @@
 
 extern char* helper;
 
-extern char* fileName;
+extern char* file_name;
 
 extern int local_text_rows, local_text_chars, user_input_len;
 extern int text_from_file_rows, text_from_file_chars;
@@ -35,7 +35,7 @@ Coordinates readCoordinates();
 #ifndef FILEPROCESSOR_H
 #define FILEPROCESSOR_H
 
-int saveToFile(FILE* );
+int saveToFile();
 char** loadFromFile(FILE* );
 
 #endif

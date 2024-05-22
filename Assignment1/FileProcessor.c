@@ -4,18 +4,18 @@
 #include <string.h>
 #include "Methods.h"
 
-int saveToFile(char* filename, char** text) {
-    FILE* file = fopen(filename, "w");
+int saveToFile() {
+    FILE* file = fopen(file_name, "w");
     if (file == NULL) {
         printf("Failed to open file\n");
         return -1;
     }
     
-    for(int i = 0; text[i] != NULL && text[i] != "\0"; i++) {
-		fprintf(file, "%s\n", text[i]);
+    for(int i = 0; local_text[i] != NULL && local_text[i] != "\0"; i++) {
+		fprintf(file, "%s\n", local_text[i]);
 	}
     fclose(file);
-    return 0;
+    return 0;                           
 }
 
 

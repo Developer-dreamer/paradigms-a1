@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 #include "Methods.h"
 
 int readConsole() {
@@ -31,14 +32,30 @@ int readConsole() {
 		}
 
 	}
+	if (strlen(user_input) == 1) {
+		return user_input[0];
+	}
 
 	return 0;
 }
 
 int readCommand() {
-	char* command = malloc(2);
-	fgets(command, 2, stdin);
-	return atoi(command);
+	printf("Enter a command: ");
+
+	char input;
+	// Read the first non-whitespace character
+	while ((scanf(" %c", &input) != 1) || isspace(input));
+
+	// Clear the input buffer
+	int c;
+	while ((c = getchar()) != '\n' && c != EOF);
+
+	if (isdigit(input)) { 
+		return input - '0'; 
+	}
+	else {
+		return -1;
+	}
 }
 
 Coordinates readCoordinates() {

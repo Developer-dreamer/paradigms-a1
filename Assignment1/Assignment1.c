@@ -4,7 +4,7 @@
 
 
 
-char* fileName = "TestFile.txt";
+char* file_name = "TestFile.txt";
 
 int local_text_rows = 64;
 int local_text_chars = 64;
@@ -30,9 +30,8 @@ int main() {
 
 	int breaker = 1;
 	while (breaker) {
-		printf("Enter a command: ");
-		int command;
-		scanf_s("%d", &command);
+
+		int command = readCommand();
 
 		switch (command) {
 
@@ -47,12 +46,7 @@ int main() {
 			readConsole();
 			end_insert_input();
 
-			// ------- was used for debugging -------
-			/*for( int i = 0; local_text[i] != NULL && local_text[i] != '\0'; i++)
-			{
-				printf("%s\n", local_text[i]);
-			}*/
-			// ---------------------------------------
+			printf("Text has been appended\n");
 
 			break;
 
@@ -63,16 +57,12 @@ int main() {
 
 			// save current string to the file 
 		case 3:
-
-			local_text = calloc(10, sizeof(char*));
-			local_text[0] = "Some useless text";
-
-			saveToFile(fileName, local_text);
+			saveToFile();
 			printf("Text has been saved to the file\n");
 			break;
 			// load string from the file
 		case 4:
-			text_from_file = loadFromFile(fileName);
+			text_from_file = loadFromFile(file_name);
 			printf("Text has been loaded from the file\n");
 
 			// ----- was used for debugging -----
