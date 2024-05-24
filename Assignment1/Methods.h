@@ -44,5 +44,6 @@ char** loadFromFile(FILE* );
 #define USERINPUTHANDLER_H
 
 int end_insert_input();
+int startNewLine();
 
 #endif

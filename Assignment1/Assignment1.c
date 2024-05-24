@@ -22,7 +22,7 @@ int main() {
 	char* helper = "0 - close the program\n"
 		"1 - append symbols to the end\n"
 		"2 - start the new line\n"
-		"3 / 4 - save from / load in file\n"
+		"3 / 4 - save to / load from file\n"
 		"5 - print current text to console\n"
 		"6 - insert text by index in file\n"
 		"7 - search substring position in file\n";
@@ -52,10 +52,14 @@ int main() {
 
 			// start new line in the string
 		case 2:
-			printf("x is 2\n");
+		{
+			if (startNewLine())
+			{
+				printf("New line has been started succsessfully\n");
+			}
 			break;
-
-			// save current string to the file 
+		}
+		// save current string to the file 
 		case 3:
 			saveToFile();
 			printf("Text has been saved to the file\n");
@@ -83,7 +87,7 @@ int main() {
 			coords = readCoordinates();
 
 			// ----- was used for debugging -----
-			// printf("%d %d\n", coords.line, coords.index);
+			//printf("%d %d\n", coords.line, coords.index);
 			// ----------------------------------
 			break;
 
