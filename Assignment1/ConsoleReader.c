@@ -103,10 +103,10 @@ int text_remover() {
 		free(text_from_file);
 		text_from_file = NULL;	 
 		printf("Local text has been cleared.\n");
-		return 1;
+		return 0;
 	}
 	else {
-		printf("Reversing changes...\n");
+		printf("Local text and text from file saved separately\n");
 		return 0;
 	}
 }

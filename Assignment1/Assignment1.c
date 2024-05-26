@@ -112,6 +112,11 @@ int main() {
 			// search substring position in file
 		case 7:
 			break;
+			// additional case to work with unconcatenated texts
+		case 8:
+			saveToFile();
+			concatenate_text();
+			break;
 		default:
 			printf("Such command does not exist\n");
 			break;
