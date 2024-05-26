@@ -76,10 +76,6 @@ int loadFromFile() {
 
         if (i >= text_from_file_rows) {
             text_from_file_rows *= 2;
-            // and now where the fun starts
-            // to ensure we are reallocating the memory correctly, it is better to create a temporary 
-            // variable, do the modifications there and then assign its value to our array
-            // this will help to avoid any memory loss which might occur during the direct realloc
             char** temp = realloc(text_from_file, text_from_file_rows * sizeof(char*));
             if (temp == NULL) {
                 printf("Failed to reallocate memory\n");
@@ -96,7 +92,6 @@ int loadFromFile() {
                 }
             }
         }
-		// printf("%s", text_from_file[i]); // to not print twice here and in switch case
 		i++;
     }
 
