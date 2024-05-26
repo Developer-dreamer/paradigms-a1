@@ -1,3 +1,4 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>
@@ -5,57 +6,106 @@
 #include "Methods.h"
 
 int saveToFile() {
-    FILE* file = fopen(file_name, "w");
-    if (file == NULL) {
-        printf("Failed to open file\n");
-        return -1;
-    }
-    
-    for(int i = 0; local_text[i] != NULL && local_text[i] != "\0"; i++) {
-		fprintf(file, "%s\n", local_text[i]);
+	FILE* file = fopen(file_name, "w");
+	if (file == NULL) {
+		printf("Failed to open file\n");
+		return -1;
 	}
-    fclose(file);
-    return 0;                           
+
+	for (int i = 0; local_text[i] != NULL && local_text[i] != '\0'; i++) {
+		if (local_text[i][0] == '\n') {
+			local_text[i][0] = '\0';
+		}
+		fprintf(file, "%s\n", local_text[i]);
+		free(local_text[i]);
+		local_text[i] = NULL;
+	}
+	free(local_text);
+	local_text = NULL;
+
+
+	fclose(file);
+	return 0;
 }
 
 
-char** loadFromFile(char* filename) {
+int loadFromFile() {
 
-    FILE* file = fopen(filename, "r");
-    if (file == NULL) {
-        printf("Failed to open file\n");
-        return NULL;
-    }
+	FILE* file = fopen(file_name, "r");
+	if (file == NULL) {
+		printf("Failed to open file\n");
+		return -1;
+	}
 
-    int max_lines = text_from_file_rows;
-    if (text_from_file != NULL) {
-        printf("File already loaded\n");
-        return -1;
-    }
+	if (text_from_file != NULL) {
+		printf("File already loaded\n");
+		if (text_remover()) {
+			loadFromFile();
+		}
+		else
+		{
+			return -1;
+		}
+	}
 
-    text_from_file = malloc(max_lines * sizeof(char*));
-    for (int i = 0; i < max_lines; i++) {
-        text_from_file[i] = calloc(text_from_file_chars, sizeof(char));
-    }
+	text_from_file = calloc(text_from_file_rows, sizeof(char*));
+	for (int i = 0; i < text_from_file_rows; i++) {
+		text_from_file[i] = calloc(text_from_file_chars, sizeof(char));
+	}
 
-    int i = 0;
-    while (fgets(text_from_file[i], text_from_file_chars, file) != NULL) {
-        // Remove the newline character
-        text_from_file[i][strcspn(text_from_file[i], "\n")] = '\0';
-        i++;
+	int i = 0;
+	while (fgets(text_from_file[i], text_from_file_chars, file) != NULL) {
 
-        // If we've reached the end of the array, resize it
-        if (i >= max_lines) {
-            max_lines *= 2;
-            text_from_file = realloc(text_from_file, max_lines * sizeof(char*));
-            for (int j = i; j < max_lines; j++) {
-                text_from_file[j] = calloc(local_text_chars, sizeof(char));
-            }
-        }
-    }
+		if (text_from_file[i][strlen(text_from_file[i]) - 1] == '\n') {
+			text_from_file[i][strlen(text_from_file[i]) - 1] = '\0';
+		}
 
-    // Close the file
-    fclose(file);
 
-    return 0;
+		if (i >= text_from_file_rows) {
+			text_from_file_rows *= 2;
+			text_from_file = realloc(text_from_file, text_from_file_rows * sizeof(char*));
+			for (int j = i; j < text_from_file_rows; j++) {
+				text_from_file[j] = calloc(text_from_file_chars, sizeof(char));
+			}
+		}
+		printf("%s", text_from_file[i]);
+		i++;
+	}
+
+
+	text_from_file[i] = NULL;
+	fclose(file);
+
+	return 0;
+}
+int concatenate_text() {
+	// concatenate text from file with local text
+	if (local_text == NULL) {
+		text_concatenator();
+		printf("Text concatenated with local successfully.\n");
+		return 0;
+	}
+	else
+	{
+		printf("Local text is not empty. Cannot concatenate texts\n");
+		if (text_remover()) {
+			concatenate_text();
+		}
+		else
+		{
+			return 1;
+		}
+	}
+}
+int text_concatenator() {
+	local_text = calloc(text_from_file_rows, sizeof(char*));
+	for (int i = 0; text_from_file[i] != NULL; i++) {
+		local_text[i] = calloc(text_from_file_chars, sizeof(char));
+
+		if (text_from_file[i] != NULL) {
+			strcpy(local_text[i], text_from_file[i]);
+			local_text[i][strlen(text_from_file[i])] = '\0';
+		}
+	}
+	return 0;
 }

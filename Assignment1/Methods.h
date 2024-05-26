@@ -28,6 +28,7 @@ extern Coordinates coords;
 
 int readConsole();
 int readCommand();
+int text_remover();
 Coordinates readCoordinates();
 
 #endif
@@ -36,7 +37,8 @@ Coordinates readCoordinates();
 #define FILEPROCESSOR_H
 
 int saveToFile();
-char** loadFromFile(FILE* );
+int loadFromFile();
+int concatenate_text();
 
 #endif
 
@@ -45,5 +47,6 @@ char** loadFromFile(FILE* );
 
 int end_insert_input();
 int startNewLine();
+int insert_text_by_index();
 
 #endif

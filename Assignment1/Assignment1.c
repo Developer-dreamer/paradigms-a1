@@ -66,18 +66,27 @@ int main() {
 			break;
 			// load string from the file
 		case 4:
-			text_from_file = loadFromFile(file_name);
-			printf("Text has been loaded from the file\n");
-
+			text_from_file = loadFromFile();
 			// ----- was used for debugging -----
-			//for(int i = 0; text[i] != NULL; i++) {
-			//    printf("%s\n", text[i]);
-			//}
+			for(int i = 0; text_from_file[i] != NULL; i++) {
+			    printf("%s\n", text_from_file[i]);
+			}
 			//-----------------------------------
+			concatenate_text();
+
+			
 			break;
 			// print current string to console
 		case 5:
-			for (int i = 0; local_text[i] != NULL && local_text[i] != "\0"; i++) {
+			if (local_text == NULL) {
+				printf("Local text is empty\n");
+				break;
+			}
+
+			for (int i = 0; local_text[i] != NULL || local_text[i] != '\0'; i++) {
+				if (local_text[i][0] == '\n') {
+					local_text[i][0] = '\0';
+				}
 				printf("%s\n", local_text[i]);
 			}
 			break;
@@ -85,7 +94,8 @@ int main() {
 		case 6:
 			printf("Enter coordinates (fromat: (x,y) - (row, line)):  ");
 			coords = readCoordinates();
-
+			
+			insert_text_by_index();
 			// ----- was used for debugging -----
 			//printf("%d %d\n", coords.line, coords.index);
 			// ----------------------------------
