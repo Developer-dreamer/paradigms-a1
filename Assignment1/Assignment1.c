@@ -66,12 +66,20 @@ int main() {
 			break;
 			// load string from the file
 		case 4:
-			text_from_file = loadFromFile();
-			// ----- was used for debugging -----
-			for(int i = 0; text_from_file[i] != NULL; i++) {
-			    printf("%s\n", text_from_file[i]);
+			if (!loadFromFile()) { 
+				// checking if the function was successful and no error with allocations occured
+				// !0 = 1 -> true (which means everything was loaded successfully)
+				// ----- was used for debugging -----
+				if (text_from_file != NULL) { // checking for null to avoid access violation
+					for (int i = 0; text_from_file[i] != NULL; i++) {
+						printf("%s\n", text_from_file[i]);
+					}
+				}
 			}
-			//-----------------------------------
+			else {
+				printf("Error loading from file\n");
+			}
+
 			concatenate_text();
 
 			
