@@ -31,52 +31,80 @@ int saveToFile() {
 
 int loadFromFile() {
 
-	FILE* file = fopen(file_name, "r");
-	if (file == NULL) {
-		printf("Failed to open file\n");
-		return -1;
-	}
+    FILE* file = fopen(file_name, "r");
+    if (file == NULL) {
+        printf("Failed to open file\n");
+        return -1;
+    }
 
-	if (text_from_file != NULL) {
-		printf("File already loaded\n");
-		if (text_remover()) {
-			loadFromFile();
-		}
+    if (text_from_file != NULL) {
+        printf("File already loaded\n");
+        if (text_remover()) {
+            loadFromFile();
+        }
 		else
 		{
-			return -1;
-		}
-	}
+            return -1;
+        }
+    }
 
-	text_from_file = calloc(text_from_file_rows, sizeof(char*));
-	for (int i = 0; i < text_from_file_rows; i++) {
-		text_from_file[i] = calloc(text_from_file_chars, sizeof(char));
-	}
+    text_from_file = calloc(text_from_file_rows, sizeof(char*));
+    // added checking for correct allocation
+    if (text_from_file == NULL) {
+        printf("Failed to allocate memory\n");
+        fclose(file);
+        return -1;
+    }
 
-	int i = 0;
-	while (fgets(text_from_file[i], text_from_file_chars, file) != NULL) {
+    for (int i = 0; i < text_from_file_rows; i++) {
+        text_from_file[i] = calloc(text_from_file_chars, sizeof(char));
+        // same checking here
+        if (text_from_file[i] == NULL) {
+            printf("Failed to allocate memory\n");
+            fclose(file);
+            return -1;
+        }
+    }
 
-		if (text_from_file[i][strlen(text_from_file[i]) - 1] == '\n') {
-			text_from_file[i][strlen(text_from_file[i]) - 1] = '\0';
-		}
+    int i = 0;
+    while (fgets(text_from_file[i], text_from_file_chars, file) != NULL) {
+
+        if (text_from_file[i][strlen(text_from_file[i]) - 1] == '\n') {
+            text_from_file[i][strlen(text_from_file[i]) - 1] = '\0';
+        }
 
 
-		if (i >= text_from_file_rows) {
-			text_from_file_rows *= 2;
-			text_from_file = realloc(text_from_file, text_from_file_rows * sizeof(char*));
-			for (int j = i; j < text_from_file_rows; j++) {
-				text_from_file[j] = calloc(text_from_file_chars, sizeof(char));
-			}
-		}
-		printf("%s", text_from_file[i]);
+        if (i >= text_from_file_rows) {
+            text_from_file_rows *= 2;
+            // and now where the fun starts
+            // to ensure we are reallocating the memory correctly, it is better to create a temporary 
+            // variable, do the modifications there and then assign its value to our array
+            // this will help to avoid any memory loss which might occur during the direct realloc
+            char** temp = realloc(text_from_file, text_from_file_rows * sizeof(char*));
+            if (temp == NULL) {
+                printf("Failed to reallocate memory\n");
+                fclose(file);
+                return -1;
+            }
+            text_from_file = temp;
+            for (int j = i; j < text_from_file_rows; j++) {
+                text_from_file[j] = calloc(text_from_file_chars, sizeof(char));
+                if (text_from_file[j] == NULL) {
+                    printf("Failed to allocate memory\n");
+                    fclose(file);
+                    return -1;
+                }
+            }
+        }
+		// printf("%s", text_from_file[i]); // to not print twice here and in switch case
 		i++;
-	}
+    }
 
 
-	text_from_file[i] = NULL;
-	fclose(file);
+    text_from_file[i] = NULL;
+    fclose(file);
 
-	return 0;
+    return 0;
 }
 int concatenate_text() {
 	// concatenate text from file with local text
