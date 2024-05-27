@@ -111,6 +111,8 @@ int main() {
 
 			// search substring position in file
 		case 7:
+			readConsole();
+			text_searcher();
 			break;
 		default:
 			printf("Such command does not exist\n");

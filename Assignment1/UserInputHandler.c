@@ -76,4 +76,49 @@ int insert_text_by_index() {
 	free(temp);
 	free(user_input);
 	return 1;
+<<<<<<< Updated upstream
 }
+=======
+}
+
+int text_searcher() {
+	if (local_text == NULL || user_input == NULL) {
+		return -1;
+	}
+
+	Coordinates coords[256];
+	int numMatches = 0;
+
+	for (int i = 0; i < local_text_rows; i++) {
+		if (local_text[i] == NULL) {
+			continue;
+		}
+
+		char* found = strstr(local_text[i], user_input);
+		while (found != NULL) {
+			
+			coords[numMatches].line = i;
+			coords[numMatches].index = found - local_text[i];
+			numMatches++;
+
+			if (found + 1 < local_text[i] + strlen(local_text[i]) && found != NULL) {
+				char* new_pointer = found + 1;
+				free(found);
+				found = NULL;
+				found = strstr(found + 1, user_input);
+				break;
+			}
+			else {
+				break;
+			}
+		}
+	}
+
+	printf("Coordinates of the found substrings:\n");
+	for (int i = 0; i < numMatches; i++) {
+		printf("(%d, %d)\n", coords[i].line, coords[i].index);
+	}
+
+	return numMatches;
+}
+>>>>>>> Stashed changes
