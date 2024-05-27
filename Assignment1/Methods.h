@@ -48,5 +48,6 @@ int concatenate_text();
 int end_insert_input();
 int startNewLine();
 int insert_text_by_index();
+int text_searcher();
 
 #endif

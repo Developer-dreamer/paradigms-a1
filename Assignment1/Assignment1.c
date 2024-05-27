@@ -108,6 +108,8 @@ int main() {
 
 			// search substring position in file
 		case 7:
+			readConsole();
+			text_searcher();
 			break;
 			// additional case to work with unconcatenated texts
 		case 8:

@@ -67,10 +67,20 @@ int loadFromFile() {
     }
 
     int i = 0;
-    while (fgets(text_from_file[i], text_from_file_chars, file) != NULL) {
+	int length = 0;
+    while (fgets(text_from_file[i] + length, text_from_file_chars - length, file) != NULL) {
+
+        length = strlen(text_from_file[i]);
+        if (length == (text_from_file_chars - 1)) {
+            text_from_file_chars *= 2;
+            text_from_file[i] = realloc(text_from_file[i], text_from_file_chars);
+        }
+
 
         if (text_from_file[i][strlen(text_from_file[i]) - 1] == '\n') {
             text_from_file[i][strlen(text_from_file[i]) - 1] = '\0';
+			length = 0;
+            i++;
         }
 
 
@@ -92,11 +102,11 @@ int loadFromFile() {
                 }
             }
         }
-		i++;
+		
     }
 
 
-    text_from_file[i] = NULL;
+    text_from_file[i + 1] = NULL;
     fclose(file);
 
     return 0;
