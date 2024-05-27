@@ -31,7 +31,7 @@ int main() {
 	int breaker = 1;
 	while (breaker) {
 
-		int command = readCommand();
+		int command = read_command();
 
 		switch (command) {
 
@@ -43,7 +43,7 @@ int main() {
 
 			// append symbols to the end of string
 		case 1:
-			readConsole();
+			read_console();
 			end_insert_input();
 
 			printf("Text has been appended\n");
@@ -53,24 +53,24 @@ int main() {
 			// start new line in the string
 		case 2:
 		{
-			if (startNewLine())
+			if (start_new_line())
 			{
 				printf("New line has been started succsessfully\n");
 			}
 			break;
 		}
+
 		// save current string to the file 
 		case 3:
-			saveToFile();
+			save_to_file();
 			printf("Text has been saved to the file\n");
 			break;
+
 			// load string from the file
 		case 4:
-			if (!loadFromFile()) { 
+			if (!load_from_file()) { 
 				if (text_from_file != NULL) {
-					for (int i = 0; text_from_file[i] != NULL; i++) {
-						printf("%s\n", text_from_file[i]);
-					}
+					printf("Text has been loaded from file\n");
 				}
 			}
 			else {
@@ -78,8 +78,6 @@ int main() {
 			}
 
 			concatenate_text();
-
-			
 			break;
 			// print current string to console
 		case 5:
@@ -97,23 +95,18 @@ int main() {
 			break;
 			// insert text by index in file
 		case 6:
-			readConsole();
-			readCoordinates();
-			
+			read_console();
+			read_coordinates();
 			insert_text_by_index();
-			// ----- was used for debugging -----
-			//printf("%d %d\n", coords.line, coords.index);
-			// ----------------------------------
 			break;
 
 			// search substring position in file
 		case 7:
-			readConsole();
+			read_console();
 			text_searcher();
 			break;
 			// additional case to work with unconcatenated texts
 		case 8:
-			saveToFile();
 			concatenate_text();
 			break;
 		default:

@@ -5,7 +5,7 @@
 #include <string.h>
 #include "Methods.h"
 
-int saveToFile() {
+int save_to_file() {
 	FILE* file = fopen(file_name, "w");
 	if (file == NULL) {
 		printf("Failed to open file\n");
@@ -29,7 +29,7 @@ int saveToFile() {
 }
 
 
-int loadFromFile() {
+int load_from_file() {
 
     FILE* file = fopen(file_name, "r");
     if (file == NULL) {
@@ -39,13 +39,7 @@ int loadFromFile() {
 
     if (text_from_file != NULL) {
         printf("File already loaded\n");
-        if (text_remover()) {
-            loadFromFile();
-        }
-		else
-		{
-            return -1;
-        }
+		return -1;
     }
 
     text_from_file = calloc(text_from_file_rows, sizeof(char*));
@@ -121,7 +115,7 @@ int concatenate_text() {
 	else
 	{
 		printf("Local text is not empty. Cannot concatenate texts\n");
-		if (text_remover()) {
+		if (remove_text()) {
 			concatenate_text();
 		}
 		else

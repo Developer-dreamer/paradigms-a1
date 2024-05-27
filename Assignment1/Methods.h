@@ -26,18 +26,18 @@ extern Coordinates coords;
 #ifndef READER_H
 #define READER_H
 
-int readConsole();
-int readCommand();
-int text_remover();
-Coordinates readCoordinates();
+int read_console();
+int read_command();
+int remove_text();
+int read_coordinates();
 
 #endif
 
 #ifndef FILEPROCESSOR_H
 #define FILEPROCESSOR_H
 
-int saveToFile();
-int loadFromFile();
+int save_to_file();
+int load_from_file();
 int concatenate_text();
 
 #endif
@@ -46,7 +46,7 @@ int concatenate_text();
 #define USERINPUTHANDLER_H
 
 int end_insert_input();
-int startNewLine();
+int start_new_line();
 int insert_text_by_index();
 int text_searcher();
 

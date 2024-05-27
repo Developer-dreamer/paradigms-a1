@@ -13,11 +13,19 @@ int end_insert_input() {
 	{
 		if (local_text[i] == NULL) {
 			local_text[i] = calloc(local_text_chars, sizeof(char));
+			if (local_text[i] == NULL) {
+				printf("Failed to allocate memory\n");
+				return -1;
+			}
 		}
 		if (local_text[i + 1] == '\0' || local_text[i + 1] == NULL) {
 			if (local_text_chars < user_input_len) {
 				local_text_chars = user_input_len;
 				local_text[i] = realloc(local_text[i], local_text_chars);
+				if (local_text[i] == NULL) {
+					printf("Failed to reallocate memory\n");
+					return -1;
+				}
 			}
 			if (local_text[i][0] == '\n')
 			{
@@ -36,7 +44,7 @@ int end_insert_input() {
 	return 0;
 }
 
-int startNewLine() {
+int start_new_line() {
 	if (local_text == NULL || local_text[0] == '\0')
 	{
 		return 0;
@@ -46,6 +54,11 @@ int startNewLine() {
 	{
 		if (local_text[i] == NULL || local_text[i] == '\0') {
 			local_text[i] = calloc(local_text_chars, sizeof(char));
+			if (local_text[i] == NULL)
+			{
+				printf("Failed to allocate memory\n");
+				return -1;
+			}
 			local_text[i][0] = '\n';
 			return 1;
 		}
@@ -61,16 +74,30 @@ int insert_text_by_index() {
 
 	if (local_text == NULL) {
 		local_text = calloc(local_text_rows, sizeof(char*));
+		if (local_text == NULL)
+		{
+			printf("Failed to allocate memory\n");
+			return -1;
+		}
 	}
 
 	if (local_text[coords.line] == NULL) {
 		local_text[coords.line] = calloc(local_text_chars, sizeof(char));
+		if (local_text[coords.line] == NULL)
+		{
+			printf("Failed to allocate memory\n");
+			return -1;
+		}
 	}
 
-	// Ensure that local_text[coords.line] has enough space
 	if (local_text_chars < coords.index + strlen(user_input) + strlen(&local_text[coords.line][coords.index])) {
 		local_text_chars = coords.index + strlen(user_input) + strlen(&local_text[coords.line][coords.index]);
 		local_text[coords.line] = realloc(local_text[coords.line], local_text_chars);
+		if (local_text[coords.line] == NULL)
+		{
+			printf("Failed to reallocate memory\n");
+			return -1;
+		}
 	}
 
 	if (local_text[coords.line][coords.index] == '\n') {
