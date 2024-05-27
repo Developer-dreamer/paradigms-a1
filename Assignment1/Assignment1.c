@@ -67,10 +67,7 @@ int main() {
 			// load string from the file
 		case 4:
 			if (!loadFromFile()) { 
-				// checking if the function was successful and no error with allocations occured
-				// !0 = 1 -> true (which means everything was loaded successfully)
-				// ----- was used for debugging -----
-				if (text_from_file != NULL) { // checking for null to avoid access violation
+				if (text_from_file != NULL) {
 					for (int i = 0; text_from_file[i] != NULL; i++) {
 						printf("%s\n", text_from_file[i]);
 					}
@@ -100,8 +97,8 @@ int main() {
 			break;
 			// insert text by index in file
 		case 6:
-			printf("Enter coordinates (fromat: (x,y) - (row, line)):  ");
-			coords = readCoordinates();
+			readConsole();
+			readCoordinates();
 			
 			insert_text_by_index();
 			// ----- was used for debugging -----
@@ -122,6 +119,6 @@ int main() {
 			break;
 		}
 	}
-
+	
 	return 0;
 }

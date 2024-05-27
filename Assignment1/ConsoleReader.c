@@ -57,7 +57,7 @@ int readCommand() {
 }
 
 Coordinates readCoordinates() {
-	Coordinates coords;
+	printf("Enter coordinates (fromat: (x,y) - (row, line)):  ");
 	if (scanf("%d %d", &coords.line, &coords.index) == 2) {
 		return coords;
 	}

@@ -12,18 +12,15 @@ int end_insert_input() {
 		if (local_text[i] == NULL) {
 			local_text[i] = calloc(local_text_chars, sizeof(char));
 		}
-		if (local_text[i + 1] == '\0' || local_text[i+1] == NULL) {
+		if (local_text[i + 1] == '\0' || local_text[i + 1] == NULL) {
 			if (local_text_chars < user_input_len) {
 				local_text_chars = user_input_len;
 				local_text[i] = realloc(local_text[i], local_text_chars);
 			}
-			if(local_text[i][0] == '\n')
+			if (local_text[i][0] == '\n')
 			{
-				if (local_text[i+1] == NULL)
-				{
-					local_text[i + 1] = calloc(local_text_chars, sizeof(char));
-				}
-				strcat(local_text[i+1], user_input);
+				local_text[i][0] = '\0';	
+				strcat(local_text[i], user_input);
 				break;
 			}
 			strcat(local_text[i], user_input);
@@ -33,6 +30,7 @@ int end_insert_input() {
 	}
 
 	free(user_input);
+	user_input = NULL;
 	return 0;
 }
 
@@ -41,7 +39,7 @@ int startNewLine() {
 	{
 		return 0;
 	}
-	
+
 	for (int i = 0; i < local_text_rows; i++)
 	{
 		if (local_text[i] == NULL || local_text[i] == '\0') {
@@ -55,7 +53,6 @@ int startNewLine() {
 }
 
 int insert_text_by_index() {
-	Coordinates coords = readCoordinates();
 	if (coords.line < 0 || coords.line >= local_text_rows || coords.index < 0 || coords.index >= local_text_chars) {
 		return -1;
 	}
@@ -68,12 +65,25 @@ int insert_text_by_index() {
 		local_text[coords.line] = calloc(local_text_chars, sizeof(char));
 	}
 
-	char* temp = calloc(local_text_chars, sizeof(char));
-	strcpy(temp, local_text[coords.line] + coords.index);
-	strcpy(local_text[coords.line] + coords.index, user_input);
-	strcat(local_text[coords.line], temp);
+	// Ensure that local_text[coords.line] has enough space
+	if (local_text_chars < coords.index + strlen(user_input) + strlen(&local_text[coords.line][coords.index])) {
+		local_text_chars = coords.index + strlen(user_input) + strlen(&local_text[coords.line][coords.index]);
+		local_text[coords.line] = realloc(local_text[coords.line], local_text_chars);
+	}
 
-	free(temp);
+	if (local_text[coords.line][coords.index] == '\n') {
+		local_text[coords.line][coords.index] = '\0';
+	}
+
+	// Move existing elements to the right to make space for the new text
+	memmove(&local_text[coords.line][coords.index + strlen(user_input)], &local_text[coords.line][coords.index], strlen(&local_text[coords.line][coords.index]) + 1);
+
+	// Insert the new text
+	memcpy(&local_text[coords.line][coords.index], user_input, strlen(user_input));
+
+	// Free the user input
 	free(user_input);
+	user_input = NULL;
+
 	return 1;
 }
