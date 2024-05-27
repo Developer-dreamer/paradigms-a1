@@ -12,8 +12,11 @@ int save_to_file() {
 		return -1;
 	}
 
-	for (int i = 0; local_text[i] != NULL && local_text[i] != '\0'; i++) {
-		if (local_text[i][0] == '\n') {
+	for (int i = 0; i < local_text_rows; i++) {
+        if (local_text[i] == NULL) {
+			continue;
+        }
+        if (local_text[i][0] == '\n') {
 			local_text[i][0] = '\0';
 		}
 		fprintf(file, "%s\n", local_text[i]);
@@ -41,7 +44,6 @@ int load_from_file() {
         printf("File already loaded\n");
 		return -1;
     }
-
     text_from_file = calloc(text_from_file_rows, sizeof(char*));
     // added checking for correct allocation
     if (text_from_file == NULL) {
@@ -68,6 +70,11 @@ int load_from_file() {
         if (length == (text_from_file_chars - 1)) {
             text_from_file_chars *= 2;
             text_from_file[i] = realloc(text_from_file[i], text_from_file_chars);
+			if (text_from_file[i] == NULL) {
+				printf("Failed to reallocate memory\n");
+				fclose(file);
+				return -1;
+			}
         }
 
 
@@ -128,9 +135,16 @@ int text_concatenator() {
 	if (text_from_file == NULL) {
         return 0;
 	}
-	local_text = calloc(text_from_file_rows, sizeof(char*));
-	for (int i = 0; text_from_file[i] != NULL; i++) {
-		local_text[i] = calloc(text_from_file_chars, sizeof(char));
+    if (local_text_rows < text_from_file_rows) {
+		local_text_rows = text_from_file_rows;
+    }
+    if (local_text_chars < text_from_file_chars)
+    {
+		local_text_chars = text_from_file_chars;
+    }
+	local_text = calloc(local_text_rows, sizeof(char*));
+	for (int i = 0; i < text_from_file_rows; i++) {
+		local_text[i] = calloc(local_text_chars, sizeof(char));
 
 		if (text_from_file[i] != NULL) {
 			strcpy(local_text[i], text_from_file[i]);

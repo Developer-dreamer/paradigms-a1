@@ -26,8 +26,8 @@ int main() {
 		"5 - print current text to console\n"
 		"6 - insert text by index in file\n"
 		"7 - search substring position in file\n"
-		"8 - concatenate texts"
-		"9 - clear console";
+		"8 - concatenate texts\n"
+		"9 - clear console\n";
 	printf("%s", helper);
 
 	int breaker = 1;
@@ -70,6 +70,10 @@ int main() {
 
 			// load string from the file
 		case 4:
+			// using command 4 everything is okay
+			// but for the second time, local_text is not empty that triggers condition for handling this case
+			// check file ConsoleProcessor.c int remove_text() function
+			// if you enter 0, starts memory freeing
 			if (!load_from_file()) { 
 				if (text_from_file != NULL) {
 					printf("Text has been loaded from file\n");

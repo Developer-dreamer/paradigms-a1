@@ -21,6 +21,14 @@ int read_console() {
 		length = strlen(user_input);
 		if (length == (user_input_len - 1)) {
 			user_input_len *= 2;
+
+			if (user_input_len > local_text_chars) {
+				local_text_chars = user_input_len;
+			}
+			if (user_input_len > text_from_file_chars) {
+				text_from_file_chars = user_input_len;
+			}
+
 			user_input = realloc(user_input, user_input_len);
 		}
 
@@ -31,6 +39,7 @@ int read_console() {
 
 	}
 
+	
 	return 0;
 }
 
@@ -78,9 +87,14 @@ int remove_text() {
 		return 1;
 
     case '0':
-        for (int i = 0; text_from_file[i] != NULL; i++) {
-            free(text_from_file[i]);
-            text_from_file[i] = NULL;
+        for (int i = 0; i < text_from_file_rows; i++) {
+			if (text_from_file[i] != NULL) {
+				// in this case local_text[1] are equal to text_from_file[1]
+				// but while i'm trying to free text_from_file, local_text also highlighted red in debug console like modified
+				// then heap corruption occurs
+				free(text_from_file[i]);
+				text_from_file[i] = NULL; // right on this line occurs: A breakpoint instruction (__debugbreak() statement or a similar call) was executed in Assignment1.exe.
+			}
         }
         free(text_from_file);
         text_from_file = NULL;
