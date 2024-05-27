@@ -67,33 +67,15 @@ int read_coordinates() {
 }
 
 int remove_text() {
-    printf("Do you want to save local text to file (2) or clear buffer and file text (1) or clear text from file only (0)?: ");
+    printf("Do you want to save local text to file (1) or clear text from file only (0)?: ");
     char answer;
     scanf(" %c", &answer);
 
     switch (answer) {
-    case '2':
-        save_to_file();
-        printf("Local text has been saved to file.\n");
-        return 1;
-
-    case '1':
-        for (int i = 0; local_text[i] != NULL; i++) {
-            free(local_text[i]);
-            local_text[i] = NULL;
-        }
-        free(local_text);
-        local_text = NULL;
-
-        for (int i = 0; text_from_file[i] != NULL; i++) {
-            free(text_from_file[i]);
-            text_from_file[i] = NULL;
-        }
-        free(text_from_file);
-        text_from_file = NULL;
-
-        printf("Local text has been cleared.\n");
-        return 1;
+	case '1':
+		save_to_file();
+		printf("Local text has been saved to file.\n");
+		return 1;
 
     case '0':
         for (int i = 0; text_from_file[i] != NULL; i++) {
@@ -111,4 +93,12 @@ int remove_text() {
 		printf("You will need to previously save local text to file\n");
         return 0;
     }
+}
+
+void clear_console() {
+#ifdef _WIN32
+    system("cls");
+#else
+    system("clear");
+#endif
 }

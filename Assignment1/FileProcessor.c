@@ -125,6 +125,9 @@ int concatenate_text() {
 	}
 }
 int text_concatenator() {
+	if (text_from_file == NULL) {
+        return 0;
+	}
 	local_text = calloc(text_from_file_rows, sizeof(char*));
 	for (int i = 0; text_from_file[i] != NULL; i++) {
 		local_text[i] = calloc(text_from_file_chars, sizeof(char));

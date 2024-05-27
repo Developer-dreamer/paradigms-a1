@@ -25,7 +25,9 @@ int main() {
 		"3 / 4 - save to / load from file\n"
 		"5 - print current text to console\n"
 		"6 - insert text by index in file\n"
-		"7 - search substring position in file\n";
+		"7 - search substring position in file\n"
+		"8 - concatenate texts"
+		"9 - clear console";
 	printf("%s", helper);
 
 	int breaker = 1;
@@ -108,6 +110,11 @@ int main() {
 			// additional case to work with unconcatenated texts
 		case 8:
 			concatenate_text();
+			break;
+		case 9:
+			printf("Clearing console...\n");
+			clear_console();
+			printf("%s", helper);
 			break;
 		default:
 			printf("Such command does not exist\n");

@@ -23,13 +23,14 @@ typedef struct Coordinates {
 extern Coordinates coords;
 #endif
 
-#ifndef READER_H
-#define READER_H
+#ifndef ÑONSOLEPROCESSOR_H
+#define CONSOLEPROCESSOR_H
 
 int read_console();
 int read_command();
 int remove_text();
 int read_coordinates();
+void clear_console();
 
 #endif
 
