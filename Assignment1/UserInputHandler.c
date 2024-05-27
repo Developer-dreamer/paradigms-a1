@@ -1,5 +1,7 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "Methods.h"
 
 int end_insert_input() {
@@ -76,9 +78,6 @@ int insert_text_by_index() {
 	free(temp);
 	free(user_input);
 	return 1;
-<<<<<<< Updated upstream
-}
-=======
 }
 
 int text_searcher() {
@@ -102,11 +101,7 @@ int text_searcher() {
 			numMatches++;
 
 			if (found + 1 < local_text[i] + strlen(local_text[i]) && found != NULL) {
-				char* new_pointer = found + 1;
-				free(found);
-				found = NULL;
 				found = strstr(found + 1, user_input);
-				break;
 			}
 			else {
 				break;
@@ -121,4 +116,3 @@ int text_searcher() {
 
 	return numMatches;
 }
->>>>>>> Stashed changes

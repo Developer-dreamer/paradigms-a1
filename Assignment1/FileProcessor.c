@@ -110,7 +110,7 @@ int loadFromFile() {
     }
 
 
-    text_from_file[i] = NULL;
+    text_from_file[i + 1] = NULL;
     fclose(file);
 
     return 0;
