@@ -26,8 +26,8 @@ int main() {
 		"5 - print current text to console\n"
 		"6 - insert text by index in file\n"
 		"7 - search substring position in file\n"
-		"8 - concatenate texts"
-		"9 - clear console";
+		"8 - concatenate texts\n"
+		"9 - clear console\n";
 	printf("%s", helper);
 
 	int breaker = 1;
